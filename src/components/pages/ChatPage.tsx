@@ -796,7 +796,7 @@ export default function ChatPage() {
   );
 
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col bg-background overflow-x-hidden">
       {/* ===== HEADER ===== */}
       {/* BEST PRACTICE: Sticky header with backdrop blur for a modern feel. */}
       <header className="sticky top-0 z-10 border-b bg-background/80 backdrop-blur">
