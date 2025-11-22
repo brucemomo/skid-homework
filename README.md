@@ -105,6 +105,14 @@ Gemini API Key 是免费的, 可以去申请
 
 如果是其他问题请携带Devtools (F12) 日志开issue.
 
+### ChatGLM/镜像站 用不起
+
+我们使用的OpenAI 轮子要求API 实现 `/v1/response` 接口
+
+之前的 `/chat/completions` 不支持
+
+我们正考虑解决该问题
+
 ### OCR 是怎么实现的
 
 现在站点会将图片直接发送给AI
