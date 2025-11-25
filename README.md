@@ -128,7 +128,9 @@ OpenAI API 未经完整测试, 若出现问题请携带 Devtools 中的日志开
 
 ### 我还有其他问题
 
-请移步 [issues](https://github.com/cubewhy/skid-homework/issues)
+> 如果你发现了Bug, 请到 [issues](https://github.com/cubewhy/skid-homework/issues) 反馈, 否则请移步讨论区.
+
+请移步 [讨论区](https://github.com/cubewhy/skid-homework/discussions)
 
 ## Star 历史记录
 
