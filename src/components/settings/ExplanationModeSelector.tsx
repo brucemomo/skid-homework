@@ -31,7 +31,7 @@ export default function ExplanationModeSelector() {
   const AVAILABLE_EXPLANATION_MODES: AvailableExplanationMode[] = [
     {
       value: "explanation",
-      label: "Show Everything to me",
+      label: "Show everything to me",
     },
     {
       value: "steps",
