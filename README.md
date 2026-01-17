@@ -70,6 +70,10 @@ Skid-Homework 不会要求你下载桌面软件, 一切东西都在浏览器内�
 | Shift+Tab/LeftArrow | 上一个文件              |
 | /                   | 改进答案                |
 
+### 工具快捷键说明
+
+- [JSXGraph](docs/zh/shortcuts/jsxgraph.md)
+
 ## 常见问题
 
 ### 画图工具支持情况
