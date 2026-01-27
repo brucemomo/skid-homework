@@ -17,6 +17,7 @@ function normalizeBaseUrl(baseUrl?: string) {
 export class OpenAiClient {
   private client: OpenAI;
   private systemPrompts: string[];
+  private toolPrompts: string[];
 
   constructor(apiKey: string, baseUrl?: string) {
     this.client = new OpenAI({
@@ -25,6 +26,7 @@ export class OpenAiClient {
       dangerouslyAllowBrowser: true,
     });
     this.systemPrompts = [];
+    this.toolPrompts = [];
   }
 
   addSystemPrompt(prompt: string) {
@@ -32,9 +34,19 @@ export class OpenAiClient {
   }
 
   setAvailableTools(prompts: string[]) {
-    const toolsPrompt = prompts.join("\n\n");
-    this.addSystemPrompt(`## Available Tools\n${toolsPrompt}`);
-    // TODO: join prompt when invoke send* methods
+    this.toolPrompts = prompts;
+  }
+
+  private buildSystemPrompt(): string {
+    let prompt = this.systemPrompts.join("\n\n");
+
+    if (this.toolPrompts.length > 0) {
+      // build tool calling prompts
+      prompt += "\n## Available Tools\n\n";
+      prompt += this.toolPrompts.join("\n\n");
+    }
+
+    return prompt;
   }
 
   /**
@@ -51,9 +63,10 @@ export class OpenAiClient {
 
     // 1. Add System Prompt
     if (this.systemPrompts) {
+      const systemPrompt = this.buildSystemPrompt();
       messages.push({
         role: "system",
-        content: this.systemPrompts.join("\n\n"),
+        content: systemPrompt,
       });
     }
 
@@ -101,9 +114,10 @@ export class OpenAiClient {
 
     // 1. Add System Prompt
     if (this.systemPrompts) {
+      const systemPrompt = this.buildSystemPrompt();
       messages.push({
         role: "system",
-        content: this.systemPrompts.join("\n\n"),
+        content: systemPrompt,
       });
     }
 

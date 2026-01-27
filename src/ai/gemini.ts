@@ -17,6 +17,7 @@ export interface GeminiConfig {
 export class GeminiAi {
   private ai: GoogleGenAI;
   private systemPrompts: string[];
+  private toolPrompts: string[];
   private config: GeminiConfig;
 
   constructor(key: string, baseUrl?: string, config?: GeminiConfig) {
@@ -28,6 +29,7 @@ export class GeminiAi {
     });
 
     this.systemPrompts = [];
+    this.toolPrompts = [];
 
     this.config = {
       thinkingBudget: config?.thinkingBudget ?? -1,
@@ -57,9 +59,19 @@ export class GeminiAi {
   }
 
   setAvailableTools(prompts: string[]) {
-    const toolsPrompt = prompts.join("\n\n");
-    this.addSystemPrompt(`## Available Tools\n${toolsPrompt}`);
-    // TODO: join prompt when invoke send* methods
+    this.toolPrompts = prompts;
+  }
+
+  private buildSystemPrompt(): string {
+    let prompt = this.systemPrompts.join("\n\n");
+
+    if (this.toolPrompts.length > 0) {
+      // build tool calling prompts
+      prompt += "\n## Available Tools\n\n";
+      prompt += this.toolPrompts.join("\n\n");
+    }
+
+    return prompt;
   }
 
   async sendMedia(
@@ -72,9 +84,10 @@ export class GeminiAi {
     const contents = [];
 
     if (this.systemPrompts) {
+      const systemPrompt = this.buildSystemPrompt();
       contents.push({
         role: "user",
-        parts: [{ text: this.systemPrompts.join("\n\n") }],
+        parts: [{ text: systemPrompt }],
       });
     }
 
@@ -140,9 +153,10 @@ export class GeminiAi {
     const contents = [];
 
     if (this.systemPrompts) {
+      const systemPrompt = this.buildSystemPrompt();
       contents.push({
         role: "user",
-        parts: [{ text: this.systemPrompts.join("\n\n") }],
+        parts: [{ text: systemPrompt }],
       });
     }
 
