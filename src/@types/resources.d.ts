@@ -202,6 +202,7 @@ interface Resources {
         },
         "menu-item": "Rename"
       },
+      "tip": "Hint: double click to focus image on solution area, single click to preview in full screen",
       "title": "Preview"
     },
     "problem-list": {

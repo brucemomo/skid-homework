@@ -27,6 +27,7 @@
     "drag-tip-mobile": "Tap a card to zoom in. Swipe left or right to review everything.",
     "no-files": "No files yet. Upload or take a photo to begin.",
     "title": "Preview",
+    "tip": "Hint: double click to focus image on solution area, single click to preview in full screen",
     "image-alt": "Homework preview",
     "file-type": {
       "pdf": "PDF",

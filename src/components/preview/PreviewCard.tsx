@@ -1,6 +1,12 @@
 import "react-photo-view/dist/react-photo-view.css";
 import { Trash2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 import type { FileItem } from "@/store/problems-store";
 import { useCallback, useState, type ClipboardEvent } from "react";
 import { cn } from "@/lib/utils";
@@ -65,8 +71,13 @@ export default function PreviewCard({
               isMobileLayout && "text-lg font-semibold",
             )}
           >
+            {/* Preview */}
             {t("title")}
           </CardTitle>
+          <CardDescription>
+            {/* Hint: double click to focus image on solution area */}
+            {t("tip")}
+          </CardDescription>
         </CardHeader>
         <CardContent
           className="flex flex-col gap-2"
