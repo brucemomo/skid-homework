@@ -168,32 +168,37 @@ export const useProblemsStore = create<ProblemsState>((set, get) => ({
   },
 
   renameFileItem: async (id, newName) => {
+    const items = get().imageItems;
+    const oldItem = items.find((i) => i.id === id);
+
+    if (!oldItem || oldItem.displayName === newName) return;
+
+    const newFile = new File([oldItem.file], newName, {
+      type: oldItem.mimeType || oldItem.file.type,
+      lastModified: Date.now(),
+    });
+    const newUrl = URL.createObjectURL(newFile);
+
+    if (oldItem.url) {
+      URL.revokeObjectURL(oldItem.url);
+    }
+
     set((state) => ({
       imageItems: state.imageItems.map((item) =>
-        item.id === id ? { ...item, displayName: newName } : item,
+        item.id === id
+          ? { ...item, file: newFile, url: newUrl, displayName: newName }
+          : item,
       ),
     }));
 
-    const updatedItem = get().imageItems.find((i) => i.id === id);
-    if (updatedItem && updatedItem.displayName !== newName) {
-      // Reconstruct File object with new name and create a new Object URL
-      const newFile = new File([updatedItem.file], newName, {
-        type: updatedItem.mimeType,
-        lastModified: Date.now(),
+    try {
+      await db.homeworks.update(id, {
+        fileName: newName,
+        blob: newFile,
       });
-      const newUrl = URL.createObjectURL(newFile);
-
-      // Update the URL in the state
-      set((state) => ({
-        imageItems: state.imageItems.map((item) =>
-          item.id === id ? { ...item, file: newFile, url: newUrl } : item,
-        ),
-      }));
-
-      // Update the file in the database
-      await db.homeworks
-        .update(id, { fileName: newName, blob: newFile })
-        .catch(console.error);
+    } catch (error) {
+      console.error("Failed to update database:", error);
+      // TODO: rollback state on db fail
     }
   },
 
