@@ -2,17 +2,17 @@ import { cn } from "@/lib/utils";
 import { ImageIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
-export type EmptyPreviewAreaProps = {
+export type EmptyPreviewListProps = {
   layout: "default" | "mobile";
   isDragging: boolean;
   onDrop: (e: React.DragEvent<HTMLDivElement>) => void;
 };
 
-export default function EmptyPreviewArea({
+export default function EmptyPreviewList({
   layout,
   isDragging,
   onDrop,
-}: EmptyPreviewAreaProps) {
+}: EmptyPreviewListProps) {
   const { t } = useTranslation("commons", { keyPrefix: "preview" });
   const isMobileLayout = layout === "mobile";
 

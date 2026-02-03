@@ -5,7 +5,7 @@ import type { FileItem } from "@/store/problems-store";
 import { useCallback, useState, type ClipboardEvent } from "react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
-import EmptyPreviewArea from "./EmptyPreviewArea";
+import EmptyPreviewList from "./EmptyPreviewList";
 import PreviewList from "./PreviewList";
 
 export type PreviewCardProps = {
@@ -78,7 +78,7 @@ export default function PreviewCard({
           onDragLeave={() => !isMobileLayout && setIsDragging(false)}
         >
           {items.length === 0 ? (
-            <EmptyPreviewArea
+            <EmptyPreviewList
               layout={layout}
               isDragging={isDragging}
               onDrop={onDrop}
