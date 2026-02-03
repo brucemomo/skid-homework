@@ -312,7 +312,7 @@ export default function ScanPage() {
         console.log(`Processing ${item.id}`);
 
         addSolution({
-          fileId: item.url,
+          fileId: item.id,
           status: "processing",
           problems: [],
         });
@@ -352,7 +352,7 @@ ${traits}
 
             aiClient.setAvailableTools(getEnabledToolCallingPrompts());
 
-            clearStreamedOutput(item.url);
+            clearStreamedOutput(item.id);
 
             const resText = await retryAsyncOperation(() =>
               aiClient.sendMedia(
@@ -360,7 +360,7 @@ ${traits}
                 item.mimeType,
                 undefined,
                 source.model,
-                (text) => appendStreamedOutput(item.url, text),
+                (text) => appendStreamedOutput(item.id, text),
               ),
             );
 
@@ -369,7 +369,7 @@ ${traits}
               throw new Error(t("errors.parsing-failed"));
             }
 
-            updateSolution(item.url, {
+            updateSolution(item.id, {
               status: "success",
               problems: res.problems ?? [],
               aiSourceId: source.id,
@@ -380,7 +380,7 @@ ${traits}
           } catch (error) {
             lastError = error;
             console.error(`Source ${source.name} failed for ${item.id}`, error);
-            clearStreamedOutput(item.url);
+            clearStreamedOutput(item.id);
           }
         }
 

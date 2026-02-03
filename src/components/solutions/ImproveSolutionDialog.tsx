@@ -107,14 +107,14 @@ ${source.traits}
         aiClient.setAvailableTools(getEnabledToolCallingPrompts());
 
         try {
-          clearStreamedOutput(entry.item.url);
+          clearStreamedOutput(entry.item.id);
 
           const resText = await aiClient.sendMedia(
             base64,
             entry.item.mimeType,
             prompt,
             source.model,
-            (text) => appendStreamedOutput(entry.item.url, text),
+            (text) => appendStreamedOutput(entry.item.id, text),
           );
 
           const res = parseImproveResponse(resText);
@@ -123,11 +123,11 @@ ${source.traits}
           }
 
           updateSolution(res);
-          clearStreamedOutput(entry.item.url);
+          clearStreamedOutput(entry.item.id);
           return;
         } catch (error) {
           lastError = error;
-          clearStreamedOutput(entry.item.url);
+          clearStreamedOutput(entry.item.id);
         }
       }
 
