@@ -316,6 +316,10 @@ export default function ScanPage() {
 
         let lastError: unknown = null;
 
+        updateSolution(item.id, {
+          status: "processing",
+        });
+
         for (const source of availableSources) {
           try {
             const aiClient = getClientForSource(source.id);
@@ -386,7 +390,7 @@ ${traits}
         // Init solution object
         addSolution({
           fileId: item.id,
-          status: "processing",
+          status: "pending",
           problems: [],
         });
       }

@@ -17,7 +17,7 @@ export type FileItem = {
 
 export type Solution = {
   fileId: string;
-  status: "success" | "processing" | "failed";
+  status: "success" | "processing" | "pending" | "failed";
   streamedOutput?: string | null;
   problems: ProblemSolution[];
   aiSourceId?: string;

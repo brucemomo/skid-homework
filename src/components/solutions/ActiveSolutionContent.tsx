@@ -116,7 +116,6 @@ export default function ActiveSolutionContent({
 
   // --- Update Handler ---
   const handleUpdateSolution = (idx: number, res: ImproveResponse) => {
-    // IMPORTANT: Use entry.item.id (File ID), NOT url
     updateProblem(
       entry.item.id,
       idx,
@@ -134,6 +133,8 @@ export default function ActiveSolutionContent({
       return providerName
         ? t("status.success-with-provider", { provider: providerName })
         : t("status.success");
+    } else if (entry.solutions.status === "pending") {
+      return t("status.pending");
     }
     switch (entry.item.status) {
       case "success":
