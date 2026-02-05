@@ -4,11 +4,17 @@ import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 import "katex/dist/katex.min.css";
-import CodeBlock, { SourceContext } from "./CodeBlock";
+import CodeBlock, { MarkdownCodeProps, SourceContext } from "./CodeBlock";
 import { memo } from "react";
 
 const components = {
   code: CodeBlock,
+  ol: ({ ...props }: MarkdownCodeProps) => (
+    <ol style={{ listStyleType: "decimal", paddingLeft: "20px" }} {...props} />
+  ),
+  li: ({ ...props }: MarkdownCodeProps) => (
+    <li style={{ marginBottom: "4px" }} {...props} />
+  ),
 };
 
 const MarkdownRenderer = ({ source }: { source: string }) => {
